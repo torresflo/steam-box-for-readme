@@ -1,60 +1,76 @@
-# 
-
+![GitHub license](https://img.shields.io/github/license/torresflo/steam-box-for-readme.svg)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+![GitHub contributors](https://img.shields.io/github/contributors/torresflo/steam-box-for-readme.svg)
+![GitHub issues](https://img.shields.io/github/issues/torresflo/steam-box-for-readme.svg)
 
 <p align="center">
-  <img width="400" src="https://user-images.githubusercontent.com/8252317/83985151-9e8eaf00-a96a-11ea-9b3c-b654dc9bee2f.png">
-  <h3 align="center">steam-box</h3>
-  <p align="center"><img width="20" height="20" src="https://store.steampowered.com/favicon.ico"></img>  Update  pinned gist / profile README to contain your Steam playtime leaderboard. </p>
-  
-   <p align="center">
-    <a href="https://github.com/YouEclipse/steam-box/workflows/Update%20gist%20with%20Steam%20Playtime/badge.svg"><img src="https://github.com/YouEclipse/steam-box/workflows/Update%20gist%20with%20Steam%20Playtime/badge.svg" alt="Update gist with Steam Playtime"></a>
+  <h1 align="center">Steam Box for readme</h3>
+
+  <p align="center">
+    A little fork of <a href="https://github.com/YouEclipse/steam-box">steam-box</a> to help you update your readme file with Steam playtime leaderboard and Steam recent played games.
+    <br />
+    <a href="https://github.com/torresflo/steam-box-for-readme/issues">Report a bug or request a feature</a>
   </p>
 </p>
 
+## Table of Contents
+
+* [Installation](#installation)
+   * [Preparation work](#preparation-work)
+   * [Project setup](#project-setup)
+* [Example](#example)
+* [Contributing](#contributing)
+* [License](#license)
 
 ---
-English | [简体中文](./README_zh.md)
 
-> 📌✨ For more pinned-gist projects like this one, check out: https://github.com/matchai/awesome-pinned-gists
+## Installation
 
-
-## 💻 Setup
-
-### 🎒 Prep work
-> if only want's to update a markdown,like profile README,skip step 1 and step 2.
-1. Create a new public GitHub Gist (https://gist.github.com/)
-1. Create a token with the `gist` scope and copy it. (https://github.com/settings/tokens/new)
+### Preparation work
 1. Create a Steam  API key. (https://steamcommunity.com/dev/apikey)
 1. Find the steam ID (steamID64) of your account. (https://steamid.io)
-1. For updating a markdown file，add comments to the place where you want to update in the markdown file.
+1. Add comments to the place where you want to update in your markdown file.
+
+You can add your most played games leaderboard with:
    ```markdown
-    <!-- steam-box start -->
-    <!-- steam-box end -->
-    
+    <!-- steam-box-playtime start -->
+    <!-- steam-box-playtime end -->
    ```
 
+And you can add your recent played games leaderboard with:
+   ```markdown
+    <!-- steam-box-recent start -->
+    <!-- steam-box-recent end -->
+   ```
 
-### 🚀 Project setup
-1. Fork this repo
-1. Edit the [environment variable](https://github.com/YouEclipse/steam-box/actions/runs/126970182/workflow#L17-L19) in `.github/workflows/schedule.yml`:
+### Project setup
 
-> For updating github profile README,you can follow [steam-box.yml](https://github.com/YouEclipse/YouEclipse/blob/master/.github/workflows/steam-box.yml) in [YouEclipse](https://github.com/YouEclipse/YouEclipse) to create a Action in your README repo.Remember it's unsafe to use token with **`repo`** scope for updating the repo, steam-box update the profile repo using git command in Github Action instead of using github API.
-
-   - **GIST_ID:** The ID portion from your gist url: `https://gist.github.com/YouEclipse/`**`9bc7025496e478f439b9cd43eba989a4`**.
+For updating your github profile README, you can follow [steam-box.yml](https://github.com/torresflo/steam-box-for-readme/blob/master/.github/workflows/schedule.yml) to create a GitHub Action in your README repository.
 
 1. Go to the repo **Settings > Secrets**
 1. Add the following environment variables:
-   - **GH_TOKEN:** The GitHub token generated above.
    - **STEAM_API_KEY:** The steam API key you created above. 
-   - **STEAM_ID:** The steam ID of your account. 
+   - **STEAM_ID:** The steam ID of your account.
 1. If you want to show specific games,put the ids in environmet variable **APP_ID**:
    - like `APP_ID=431960,730`
    - you can get the id of a game from the store url: `https://store.steampowered.com/app/`**730**`/CounterStrike_Global_Offensive/`
 
-## 🕵️ How it works
-- Get your games playtime from [Steamwork Web API](https://partner.steamgames.com/doc/webapi) 
-- Update Gist with Github API 
-- Use Github Actions for updating Gist  
+## Example
 
-## 📄 License
-This project is licensed under [Apache-2.0](./LICENSE)
+Here is an example from my own profile that you could obtain:
+
+![Example image](https://raw.githubusercontent.com/torresflo/steam-box-for-readme/master/images/1.png)
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<!-- LICENSE -->
+## License
+Distributed under the [Apache-2.0](./LICENSE) License. See `LICENSE` for more information.
