@@ -18,7 +18,7 @@ func TestBox_GetPlayTime(t *testing.T) {
 	if os.Getenv("MULTILINE") != "" {
 		multiLined, err = strconv.ParseBool(os.Getenv("MULTILINE"))
 		if err != nil {
-			panic("multiLined option error: "+ err.Error())
+			panic("multiLined option error: " + err.Error())
 		}
 	}
 
@@ -33,10 +33,7 @@ func TestBox_GetPlayTime(t *testing.T) {
 		appIDList = append(appIDList, uint32(appid))
 	}
 
-	ghToken := os.Getenv("GH_TOKEN")
-	ghUsername := os.Getenv("GH_USER")
-
-	box := NewBox(steamAPIKey, ghUsername, ghToken)
+	box := NewBox(steamAPIKey)
 	lines, err := box.GetPlayTime(context.Background(), steamID, multiLined, appIDList...)
 	if err != nil {
 		t.Error(err)
@@ -49,9 +46,6 @@ func TestBox_GetRecentGames(t *testing.T) {
 	steamAPIKey := os.Getenv("STEAM_API_KEY")
 	steamID, _ := strconv.ParseUint(os.Getenv("STEAM_ID"), 10, 64)
 
-	ghToken := os.Getenv("GH_TOKEN")
-	ghUsername := os.Getenv("GH_USER")
-
 	multiLined := false // boolean for whether hours should have their own line - YES = true, NO = false
 	if os.Getenv("MULTILINE") != "" {
 		lineOption := os.Getenv("MULTILINE")
@@ -60,7 +54,7 @@ func TestBox_GetRecentGames(t *testing.T) {
 		}
 	}
 
-	box := NewBox(steamAPIKey, ghUsername, ghToken)
+	box := NewBox(steamAPIKey)
 	lines, err := box.GetRecentGames(context.Background(), steamID, multiLined)
 	if err != nil {
 		t.Error(err)
@@ -69,11 +63,7 @@ func TestBox_GetRecentGames(t *testing.T) {
 }
 
 func TestBox_Readme(t *testing.T) {
-
-	ghToken := os.Getenv("GH_TOKEN")
-	ghUsername := os.Getenv("GH_USER")
-
-	box := NewBox("", ghUsername, ghToken)
+	box := NewBox("")
 
 	ctx := context.Background()
 
@@ -85,7 +75,10 @@ func TestBox_Readme(t *testing.T) {
 🍳 PLAYERUNKNOWN'S BATTLEGROUNDS     🕘 34 hrs 40 mins
 🌏 Sid Meier's Civilization V        🕘 11 hrs 9 mins`)
 
-	err := box.UpdateMarkdown(ctx, title, filename, content)
+	start := []byte("<!-- steam-box-playtime start -->")
+	end := []byte("<!-- steam-box-playtime end -->")
+
+	err := box.UpdateMarkdown(ctx, title, filename, content, start, end)
 	if err != nil {
 		t.Error(err)
 	}

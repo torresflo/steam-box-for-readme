@@ -11,45 +11,21 @@ import (
 	"strings"
 
 	steam "github.com/YouEclipse/steam-go/pkg"
-	"github.com/google/go-github/github"
 	"github.com/mattn/go-runewidth"
 )
 
 // Box defines the steam box.
 type Box struct {
-	steam  *steam.Client
-	github *github.Client
+	steam *steam.Client
 }
 
 // NewBox creates a new Box with the given API key.
-func NewBox(apikey string, ghUsername, ghToken string) *Box {
+func NewBox(apikey string) *Box {
 	box := &Box{}
 	box.steam = steam.NewClient(apikey, nil)
-	tp := github.BasicAuthTransport{
-		Username: strings.TrimSpace(ghUsername),
-		Password: strings.TrimSpace(ghToken),
-	}
-
-	box.github = github.NewClient(tp.Client())
 
 	return box
 
-}
-
-// GetGist gets the gist from github.com.
-func (b *Box) GetGist(ctx context.Context, id string) (*github.Gist, error) {
-	gist, _, err := b.github.Gists.Get(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-
-	return gist, nil
-}
-
-// UpdateGist updates the gist.
-func (b *Box) UpdateGist(ctx context.Context, id string, gist *github.Gist) error {
-	_, _, err := b.github.Gists.Edit(ctx, id, gist)
-	return err
 }
 
 // GetPlayTime gets the top 5 Steam games played in descending order from the Steam API.
@@ -138,15 +114,13 @@ func (b *Box) GetRecentGames(ctx context.Context, steamID uint64, multiLined boo
 }
 
 // UpdateMarkdown updates the content to the markdown file.
-func (b *Box) UpdateMarkdown(ctx context.Context, title, filename string, content []byte) error {
+func (b *Box) UpdateMarkdown(ctx context.Context, title, filename string, content []byte, start []byte, end []byte) error {
 	md, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return fmt.Errorf("steambox.UpdateMarkdown: Error reade a file: %w", err)
 	}
 
-	start := []byte("<!-- steam-box start -->")
 	before := md[:bytes.Index(md, start)+len(start)]
-	end := []byte("<!-- steam-box end -->")
 	after := md[bytes.Index(md, end):]
 
 	newMd := bytes.NewBuffer(nil)
@@ -187,15 +161,19 @@ func getNameEmoji(id int, name string) string {
 		570:     "⚔️ ",    // Dota 2
 		730:     "🔫 ",     // CS:GO
 		8930:    "🌏 ",     // Sid Meier's Civilization V
+		105600:  "🌍 ",     //Terraria
+		250900:  "🎲 ",     // The Binding of Isaac Rebirth
 		252950:  "🚀 ",     // Rocket League
 		269950:  "✈️ ",    // X-Plane 11
 		271590:  "🚓 ",     // GTA 5
 		359550:  "🔫 ",     // Tom Clancy's Rainbow Six Siege
 		431960:  "💻 ",     // Wallpaper Engine
+		489830:  "⚔️ ",    // The Elder Scrolls V: Skyrim
 		578080:  "🍳 ",     // PUBG
 		945360:  "🕵️‍♂️ ", // Among Us
 		1250410: "🛩️ ",    // Microsoft Flight Simulator
 		1091500: "🦾 ",     // Cyberpunk 2077
+		1097150: "🎪 ",     // Fall Guys: Ultimate Knockout
 	}
 
 	if emoji, ok := nameEmojiMap[id]; ok {
