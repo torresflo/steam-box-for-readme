@@ -130,7 +130,7 @@ func (b *Box) UpdateMarkdown(ctx context.Context, title, filename string, conten
 	newMd.Write(content)
 	newMd.WriteString("\n")
 	newMd.WriteString("```\n")
-	newMd.WriteString("<!-- Powered by https://github.com/YouEclipse/steam-box . -->\n")
+	newMd.WriteString("<!-- Powered by https://github.com/torresflo/steam-box-for-readme . -->\n")
 	newMd.Write(after)
 
 	err = ioutil.WriteFile(filename, newMd.Bytes(), os.ModeAppend)
@@ -174,6 +174,7 @@ func getNameEmoji(id int, name string) string {
 		1250410: "🛩️ ",    // Microsoft Flight Simulator
 		1091500: "🦾 ",     // Cyberpunk 2077
 		1097150: "🎪 ",     // Fall Guys: Ultimate Knockout
+		1240440: "🪐 ",     //Halo Infinite
 	}
 
 	if emoji, ok := nameEmojiMap[id]; ok {
