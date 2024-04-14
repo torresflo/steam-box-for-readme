@@ -174,7 +174,9 @@ func getNameEmoji(id int, name string) string {
 		1250410: "🛩️ ",    // Microsoft Flight Simulator
 		1091500: "🦾 ",     // Cyberpunk 2077
 		1097150: "🎪 ",     // Fall Guys: Ultimate Knockout
-		1240440: "🪐 ",     //Halo Infinite
+		1240440: "🪐 ",     // Halo Infinite
+		2379780: "🃏 ",     // Balatro
+		1086940: "🗡️ ",    // Baldur's Gate 3
 	}
 
 	if emoji, ok := nameEmojiMap[id]; ok {
